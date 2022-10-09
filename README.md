@@ -24,6 +24,13 @@
 
 <img src="https://i.imgur.com/IKfrIqW.png" title="wallet support support" />
 
+## Roadmap
+
+- [ ] npm module (drop-in replacement for ethers.js)
+- [ ] txn statuses
+- [ ] More examples
+- [ ] Support Arbitrum
+
 ## Built With
 
 Optimism, Polygon, Next.js, etc.
