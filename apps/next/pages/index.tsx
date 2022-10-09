@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
+import dynamiteSrc from '../public/firecracker-240.png';
 import styles from '../styles/Home.module.css';
-
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
           Connect any app to web3 with
           <code className={styles.code}>`zero code`</code>
         </p>
+        <Image src={dynamiteSrc} width={120} height={120} />
 
         <div className={styles.grid}>
           <Link href="/v0/encode">
