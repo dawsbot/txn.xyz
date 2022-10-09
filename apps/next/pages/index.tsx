@@ -32,7 +32,15 @@ const Home: NextPage = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <h2>Claim Airdrop&rarr;</h2>
+            <h2>
+              <Image
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/helicopter_1f681.png"
+                width={'20px'}
+                height={'20px'}
+                alt={'helicopter'}
+              />{' '}
+              Claim Airdrop&rarr;
+            </h2>
             <p>
               The most complex of the examples! Complex function parameters all
               stored in the URL.
@@ -44,7 +52,15 @@ const Home: NextPage = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <h2>Approve DAI&rarr;</h2>
+            <h2>
+              <Image
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/check-mark-button_2705.png"
+                width={'20px'}
+                height={'20px'}
+                alt={'check mark'}
+              />{' '}
+              Approve DAI&rarr;
+            </h2>
             <p>The First step to any ERC-20 send.</p>
           </a>
           <a
@@ -53,7 +69,15 @@ const Home: NextPage = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <h2>Transfer DAI&rarr;</h2>
+            <h2>
+              <Image
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/money-with-wings_1f4b8.png"
+                width={'20px'}
+                height={'20px'}
+                alt={'money with wings'}
+              />{' '}
+              Transfer DAI&rarr;
+            </h2>
             <p>Transfering an ERC-20 after it has been approved</p>
           </a>
         </div>

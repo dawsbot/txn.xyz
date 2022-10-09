@@ -76,6 +76,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <SEO />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_G_TAG_ID}`}
+      />
+      <Script
+        id="gtag-fn"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_G_TAG_ID}', {
+          page_path: window.location.pathname,
+        });
+      `,
+        }}
+      />
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
           <GithubCorner
@@ -96,25 +115,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           </footer>
           <ToastContainer />
         </RainbowKitProvider>
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_G_TAG_ID}`}
-        />
-        <Script
-          id="gtag-fn"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${process.env.NEXT_PUBLIC_G_TAG_ID}', {
-          page_path: window.location.pathname,
-        });
-      `,
-          }}
-        />
       </WagmiConfig>
     </>
   );
