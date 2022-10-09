@@ -15,8 +15,10 @@ import { publicProvider } from 'wagmi/providers/public';
 import '../styles/globals.css';
 import styles from '../styles/Home.module.css';
 
+import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import { SEO } from '../src/frontend/components/SEO';
+import { gtag } from '../src/frontend/utils/analytics/gtag';
 
 const gnosisChain: Chain = {
   id: 100,
@@ -70,6 +72,7 @@ const wagmiClient = createClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  gtag.useGtag();
   return (
     <>
       <SEO />
@@ -93,6 +96,25 @@ function MyApp({ Component, pageProps }: AppProps) {
           </footer>
           <ToastContainer />
         </RainbowKitProvider>
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_G_TAG_ID}`}
+        />
+        <Script
+          id="gtag-fn"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_G_TAG_ID}', {
+          page_path: window.location.pathname,
+        });
+      `,
+          }}
+        />
       </WagmiConfig>
     </>
   );
