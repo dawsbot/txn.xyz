@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://www.txn.xyz/images/screenshot-v0.jpg" title="Logo" width="800"/>
+  <img src="./apps/next/public/images/wordmark.png" title="Wordmark" width=600/>
 </p>
 <p align="center">
   <b>
@@ -14,9 +14,11 @@
 
 ## [txn.xyz](https://txn.xyz)
 
+  <img src="https://www.txn.xyz/images/screenshot-v0.jpg" title="Example"/>
+
 ## Network Support
 
-<img src="https://i.imgur.com/QXyHETu.png" title="network support" />
+<img src="./apps/next/public/images/networks.jpg" title="network support" />
 
 ## Wallet Support
 
@@ -28,4 +30,4 @@ Optimism, Polygon, Next.js, etc.
 
 ## EthBogota
 
-To view the full project description, read [the EthBogota project page](https://ethglobal.com/showcase/drain-6f9sc)
+To view the full project description, read [the EthBogota project page](https://ethglobal.com/showcase/txn-xyz-knbjw)
