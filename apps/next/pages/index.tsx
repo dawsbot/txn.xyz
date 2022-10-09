@@ -89,6 +89,56 @@ const Home: NextPage = () => {
             <p>Transfering an ERC-20 after it has been approved</p>
           </a>
         </div>
+        <hr></hr>
+        <h2 className={styles.h2}>Use Cases</h2>
+        <div className={styles.grid}>
+          <div className={styles.card}>
+            <h2>
+              <Image
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/nerd-face_1f913.png"
+                width={'24px'}
+                height={'24px'}
+                alt={'helicopter'}
+              />{' '}
+              Command Line Tools&rarr;
+            </h2>
+
+            <p>
+              NEVER store your private key in your scripts again. Use txn.xyz to
+              approve transactions and keep your keys safe.
+            </p>
+          </div>
+          <div className={styles.card}>
+            <h2>
+              <Image
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/spider-web_1f578-fe0f.png"
+                width={'24px'}
+                height={'24px'}
+                alt={'check mark'}
+              />{' '}
+              Web Apps&rarr;
+            </h2>
+            <p>
+              NEVER slow your sites with Ethers.js or web3.js again! Send users
+              here for just-in-time approvals.
+            </p>
+          </div>
+          <div className={styles.card}>
+            <h2>
+              <Image
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/recycling-symbol_267b-fe0f.png"
+                width={'24px'}
+                height={'24px'}
+                alt={'check mark'}
+              />{' '}
+              Recurring Events&rarr;
+            </h2>
+            <p>
+              Want to claim your DeFi yields weekly? Just put the claim
+              transaction URL into you calendar.
+            </p>
+          </div>
+        </div>
       </main>
     </div>
   );
