@@ -18,7 +18,15 @@ const Home: NextPage = () => {
         <div className={styles.grid}>
           <Link href="/v0/encode">
             <a className={styles.card}>
-              <h2>Encode Transaction &rarr;</h2>
+              <h2>
+                <Image
+                  src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/lg/57/pocket-calculator_1f5a9.png"
+                  width={'24px'}
+                  height={'24px'}
+                  alt={'calculator'}
+                />{' '}
+                Encode Transaction &rarr;
+              </h2>
               <p>The fastest way to send or call contracts on Ethereum!</p>
             </a>
           </Link>
@@ -35,8 +43,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/helicopter_1f681.png"
-                width={'20px'}
-                height={'20px'}
+                width={'24px'}
+                height={'24px'}
                 alt={'helicopter'}
               />{' '}
               Claim Airdrop&rarr;
@@ -55,8 +63,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/check-mark-button_2705.png"
-                width={'20px'}
-                height={'20px'}
+                width={'24px'}
+                height={'24px'}
                 alt={'check mark'}
               />{' '}
               Approve DAI&rarr;
@@ -72,8 +80,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/money-with-wings_1f4b8.png"
-                width={'20px'}
-                height={'20px'}
+                width={'24px'}
+                height={'24px'}
                 alt={'money with wings'}
               />{' '}
               Transfer DAI&rarr;
