@@ -14,6 +14,10 @@ const chainData: Record<number, { apiRoot: string; apiKey: string }> = {
     apiRoot: 'https://api-optimistic.etherscan.io/api',
     apiKey: process.env.OPTIMISTIC_ETHERSCAN_API_KEY as string,
   },
+  56: {
+    apiRoot: 'https://api.bscscan.com/api',
+    apiKey: process.env.BSCSCAN_API_KEY as string,
+  },
   100: {
     apiRoot: 'https://api.gnosisscan.io/api',
     apiKey: process.env.GNOSISSCAN_API_KEY as string,
