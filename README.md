@@ -41,4 +41,4 @@ To integrate with the the Hardhat environment, try the [Hardhat plugin by SolidS
 
 ## EthBogota
 
-To view the full project description, read [the EthBogota project page](https://ethglobal.com/showcase/txn-xyz-knbjw)
+To view the full project description, read [the EthBogota project page](https://ethglobal.com/showcase/txn-xyz-knbjw).
