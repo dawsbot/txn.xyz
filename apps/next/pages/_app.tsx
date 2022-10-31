@@ -21,6 +21,23 @@ import styled from 'styled-components';
 import { SEO } from '../src/frontend/components/SEO';
 import { gtag } from '../src/frontend/utils/analytics/gtag';
 
+const bscChain: Chain = {
+  id: 56,
+  name: 'Binance Smart Chain',
+  network: 'bsc',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'BNB',
+    symbol: 'BNB',
+  },
+  rpcUrls: {
+    default: 'https://bscrpc.com',
+  },
+  blockExplorers: {
+    default: { name: 'BSCScan', url: 'https://bscscan.com/' },
+  },
+  testnet: false,
+};
 const gnosisChain: Chain = {
   id: 100,
   name: 'Gnosis Chain',
@@ -45,6 +62,7 @@ const { chains, provider, webSocketProvider } = configureChains(
     chain.polygon,
     chain.optimism,
     gnosisChain,
+    bscChain,
     // chain.arbitrum,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
       ? [chain.goerli, chain.kovan, chain.rinkeby, chain.ropsten]
@@ -78,10 +96,7 @@ const TopNav = styled.header`
   align-items: center;
   justify-content: center;
   background-color: #ffde59;
-  /* color: white; */
   color: rgb(72, 72, 72);
-  /* color: rgb(220,220,220); */
-  /* color: white; */
   font-weight: bold
   font-size: 22px;
 `;
