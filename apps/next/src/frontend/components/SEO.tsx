@@ -3,7 +3,7 @@ import Head from 'next/head';
 export const DEFAULT_TITLE = 'txn.xyz';
 export const DEFAULT_DESCRIPTION =
   'txn.xyz is a new way to use Ethereum. Request transactions, transfers, and more without ever needing ethers or web3.js';
-const DEFAULT_IMAGE = 'https://txn.xyz/images/screenshot-v0.jpg';
+const DEFAULT_IMAGE = 'https://txn.xyz/images/wordmark.png';
 
 interface SEOProps {
   title?: string;
