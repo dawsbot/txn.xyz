@@ -5,7 +5,6 @@ import GithubCorner from 'react-github-corner';
 import { ToastContainer } from 'react-toastify';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { bsc, gnosis, goerli, mainnet, optimism, polygon } from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import '../styles/globals.css';
 import styles from '../styles/Home.module.css';
@@ -27,12 +26,12 @@ const { chains, provider, webSocketProvider } = configureChains(
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
   ],
   [
-    alchemyProvider({
-      // This is Alchemy's default API key.
-      // You can get your own at https://dashboard.alchemyapi.io
-      apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC',
-    }),
     publicProvider(),
+    // alchemyProvider({
+    //   // This is Alchemy's default API key.
+    //   // You can get your own at https://dashboard.alchemyapi.io
+    //   apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC',
+    // }),
   ],
 );
 

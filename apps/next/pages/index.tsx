@@ -16,19 +16,17 @@ const Home: NextPage = () => {
         <Image src={dynamiteSrc} width={120} height={120} />
 
         <div className={styles.grid}>
-          <Link href="/v0/encode">
-            <a className={styles.card}>
-              <h2>
-                <Image
-                  src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/lg/57/pocket-calculator_1f5a9.png"
-                  width={'24px'}
-                  height={'24px'}
-                  alt={'calculator'}
-                />{' '}
-                Encode Transaction &rarr;
-              </h2>
-              <p>The fastest way to send or call contracts on Ethereum!</p>
-            </a>
+          <Link href="/v0/encode" className={styles.card}>
+            <h2>
+              <Image
+                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/lg/57/pocket-calculator_1f5a9.png"
+                width={24}
+                height={24}
+                alt={'calculator'}
+              />{' '}
+              Encode Transaction &rarr;
+            </h2>
+            <p>The fastest way to send or call contracts on Ethereum!</p>
           </Link>
         </div>
         <hr></hr>
@@ -43,8 +41,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/helicopter_1f681.png"
-                width={'24px'}
-                height={'24px'}
+                width={24}
+                height={24}
                 alt={'helicopter'}
               />{' '}
               Claim Airdrop&rarr;
@@ -63,8 +61,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/check-mark-button_2705.png"
-                width={'24px'}
-                height={'24px'}
+                width={24}
+                height={24}
                 alt={'check mark'}
               />{' '}
               Approve DAI&rarr;
@@ -80,8 +78,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/money-with-wings_1f4b8.png"
-                width={'24px'}
-                height={'24px'}
+                width={24}
+                height={24}
                 alt={'money with wings'}
               />{' '}
               Transfer DAI&rarr;
@@ -96,8 +94,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/nerd-face_1f913.png"
-                width={'24px'}
-                height={'24px'}
+                width={24}
+                height={24}
                 alt={'helicopter'}
               />{' '}
               Command Line Tools&rarr;
@@ -112,8 +110,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/spider-web_1f578-fe0f.png"
-                width={'24px'}
-                height={'24px'}
+                width={24}
+                height={24}
                 alt={'check mark'}
               />{' '}
               Web Apps&rarr;
@@ -127,8 +125,8 @@ const Home: NextPage = () => {
             <h2>
               <Image
                 src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/recycling-symbol_267b-fe0f.png"
-                width={'24px'}
-                height={'24px'}
+                width={24}
+                height={24}
                 alt={'check mark'}
               />{' '}
               Recurring Events&rarr;
