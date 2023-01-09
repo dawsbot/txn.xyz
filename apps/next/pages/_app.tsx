@@ -3,14 +3,8 @@ import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 import GithubCorner from 'react-github-corner';
 import { ToastContainer } from 'react-toastify';
-import {
-  Chain,
-  chain,
-  configureChains,
-  createClient,
-  WagmiConfig,
-} from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { bsc, gnosis, goerli, mainnet, optimism, polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import '../styles/globals.css';
 import styles from '../styles/Home.module.css';
@@ -21,60 +15,23 @@ import styled from 'styled-components';
 import { SEO } from '../src/frontend/components/SEO';
 import { gtag } from '../src/frontend/utils/analytics/gtag';
 
-const bscChain: Chain = {
-  id: 56,
-  name: 'Binance Smart Chain',
-  network: 'bsc',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'BNB',
-    symbol: 'BNB',
-  },
-  rpcUrls: {
-    default: 'https://bscrpc.com',
-  },
-  blockExplorers: {
-    default: { name: 'BSCScan', url: 'https://bscscan.com/' },
-  },
-  testnet: false,
-};
-const gnosisChain: Chain = {
-  id: 100,
-  name: 'Gnosis Chain',
-  network: 'gnosis',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'XDAI',
-    symbol: 'XDAI',
-  },
-  rpcUrls: {
-    default: 'https://rpc.ankr.com/gnosis',
-  },
-  blockExplorers: {
-    default: { name: 'GnosisScan', url: 'https://gnosisscan.io/' },
-  },
-  testnet: false,
-};
-
 const { chains, provider, webSocketProvider } = configureChains(
   [
-    chain.mainnet,
-    chain.polygon,
-    chain.optimism,
-    gnosisChain,
-    bscChain,
+    mainnet,
+    polygon,
+    optimism,
+    gnosis,
+    bsc,
     // chain.arbitrum,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-      ? [chain.goerli, chain.kovan, chain.rinkeby, chain.ropsten]
-      : []),
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
   ],
   [
-    alchemyProvider({
-      // This is Alchemy's default API key.
-      // You can get your own at https://dashboard.alchemyapi.io
-      apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC',
-    }),
     publicProvider(),
+    // alchemyProvider({
+    //   // This is Alchemy's default API key.
+    //   // You can get your own at https://dashboard.alchemyapi.io
+    //   apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC',
+    // }),
   ],
 );
 
