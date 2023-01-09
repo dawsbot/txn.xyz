@@ -13,7 +13,12 @@ const Home: NextPage = () => {
           Connect any app to web3 with
           <code className={styles.code}>`zero code`</code>
         </p>
-        <Image src={dynamiteSrc} width={120} height={120} />
+        <Image
+          src={dynamiteSrc}
+          width={120}
+          height={120}
+          alt={'dynamite emoji'}
+        />
 
         <div className={styles.grid}>
           <Link href="/v0/encode" className={styles.card}>
