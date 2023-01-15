@@ -37,7 +37,7 @@ Optimism, Polygon, Next.js, etc.
 
 ## Integrations
 
-To integrate with the the Hardhat environment, try the [Hardhat plugin by SolidState](https://github.com/solidstate-network/hardhat-txn-dot-xyz).
+To integrate with the Hardhat environment, try the [Hardhat plugin by SolidState](https://github.com/solidstate-network/hardhat-txn-dot-xyz).
 
 ## EthBogota
 
