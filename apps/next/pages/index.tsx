@@ -138,7 +138,7 @@ const Home: NextPage = () => {
             </h2>
             <p>
               Want to claim your DeFi yields weekly? Just put the claim
-              transaction URL into you calendar.
+              transaction URL into your calendar.
             </p>
           </div>
         </div>
