@@ -89,7 +89,7 @@ const Home: NextPage = () => {
               />{' '}
               Transfer DAI&rarr;
             </h2>
-            <p>Transfering an ERC-20 after it has been approved</p>
+            <p>Transferring an ERC-20 after it has been approved</p>
           </a>
         </div>
         <hr></hr>
