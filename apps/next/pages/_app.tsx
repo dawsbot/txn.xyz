@@ -3,14 +3,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 import GithubCorner from 'react-github-corner';
 import { ToastContainer } from 'react-toastify';
-import {
-  Chain,
-  chain,
-  configureChains,
-  createClient,
-  WagmiConfig,
-} from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { configureChains, createConfig, mainnet, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import '../styles/globals.css';
 import styles from '../styles/Home.module.css';
@@ -18,77 +11,114 @@ import styles from '../styles/Home.module.css';
 import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
+import { arbitrum, bsc, gnosis, optimism, polygon } from 'viem/chains';
+import { z } from 'zod';
 import { SEO } from '../src/frontend/components/SEO';
 import { gtag } from '../src/frontend/utils/analytics/gtag';
 
-const bscChain: Chain = {
-  id: 56,
-  name: 'Binance Smart Chain',
-  network: 'bsc',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'BNB',
-    symbol: 'BNB',
-  },
-  rpcUrls: {
-    default: 'https://bscrpc.com',
-  },
-  blockExplorers: {
-    default: { name: 'BSCScan', url: 'https://bscscan.com/' },
-  },
-  testnet: false,
-};
-const gnosisChain: Chain = {
-  id: 100,
-  name: 'Gnosis Chain',
-  network: 'gnosis',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'XDAI',
-    symbol: 'XDAI',
-  },
-  rpcUrls: {
-    default: 'https://rpc.ankr.com/gnosis',
-  },
-  blockExplorers: {
-    default: { name: 'GnosisScan', url: 'https://gnosisscan.io/' },
-  },
-  testnet: false,
-};
+// const bscChain: Chain = {
+//   id: 56,
+//   name: 'Binance Smart Chain',
+//   network: 'bsc',
+//   nativeCurrency: {
+//     decimals: 18,
+//     name: 'BNB',
+//     symbol: 'BNB',
+//   },
+//   rpcUrls: {
+//     default: 'https://bscrpc.com',
+//   },
+//   blockExplorers: {
+//     default: { name: 'BSCScan', url: 'https://bscscan.com/' },
+//   },
+//   testnet: false,
+// };
+// const gnosisChain: Chain = {
+//   id: 100,
+//   name: 'Gnosis Chain',
+//   network: 'gnosis',
+//   nativeCurrency: {
+//     decimals: 18,
+//     name: 'XDAI',
+//     symbol: 'XDAI',
+//   },
+//   rpcUrls: {
+//     default: 'https://rpc.ankr.com/gnosis',
+//   },
+//   blockExplorers: {
+//     default: { name: 'GnosisScan', url: 'https://gnosisscan.io/' },
+//   },
+//   testnet: false,
+// };
 
-const { chains, provider, webSocketProvider } = configureChains(
-  [
-    chain.mainnet,
-    chain.polygon,
-    chain.optimism,
-    gnosisChain,
-    bscChain,
-    // chain.arbitrum,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-      ? [chain.goerli, chain.kovan, chain.rinkeby, chain.ropsten]
-      : []),
-  ],
-  [
-    alchemyProvider({
-      // This is Alchemy's default API key.
-      // You can get your own at https://dashboard.alchemyapi.io
-      apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC',
-    }),
-    publicProvider(),
-  ],
+const walletConnectProjectId = z
+  .string()
+  .parse(process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID);
+
+const { chains, publicClient } = configureChains(
+  [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
+  [publicProvider()],
 );
 
 const { connectors } = getDefaultWallets({
   appName: 'txn.xyz',
+  projectId: walletConnectProjectId,
   chains,
 });
 
-const wagmiClient = createClient({
+const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider,
+  publicClient,
 });
+
+// const walletConnectProjectId = z
+//   .string()
+//   .parse(process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID);
+// const config = getDefaultConfig({
+//   appName: 'txn.xyz',
+//   projectId: walletConnectProjectId,
+//   chains: [mainnet],
+//   transports: {
+//     [mainnet.id]: http(),
+//   },
+// });
+
+// const queryClient = new QueryClient();
+
+// const { chains, provider, webSocketProvider } = configureChains(
+//   [
+//     chain.mainnet,
+//     chain.polygon,
+//     chain.optimism,
+//     gnosisChain,
+//     bscChain,
+//     // chain.arbitrum,
+//     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+//       ? [chain.goerli, chain.kovan, chain.rinkeby, chain.ropsten]
+//       : []),
+//   ],
+//   [
+//     alchemyProvider({
+//       // This is Alchemy's default API key.
+//       // You can get your own at https://dashboard.alchemyapi.io
+//       apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC',
+//     }),
+//     publicProvider(),
+//   ],
+// );
+
+// const { connectors } = getDefaultWallets({
+//   appName: 'txn.xyz',
+//   chains,
+// });
+
+// const wagmiClient = createClient({
+//   autoConnect: true,
+//   connectors,
+//   provider,
+//   webSocketProvider,
+// });
 
 const TopNav = styled.header`
   height: 50px;
@@ -132,8 +162,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <TopNav>Subscribe</TopNav>
       </a>
 
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider coolMode chains={chains}>
           <GithubCorner
             href="https://github.com/dawsbot/txn.xyz"
             size={'15vw'}
