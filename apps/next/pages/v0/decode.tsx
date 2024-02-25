@@ -150,14 +150,14 @@ const Decode: NextPage = () => {
         </Button>
 
         <div className={styles.grid} style={{ marginTop: '100px' }}>
-          <Link href="/">
-            <a className={styles.card}>
-              <h2>What is this?&rarr;</h2>
-              <p>
-                txn.xyz is a new way to use Ethereum. Everything required to
-                call functions is URL encoded!
-              </p>
-            </a>
+          <Link href="/" className={styles.card}>
+
+            <h2>What is this?&rarr;</h2>
+            <p>
+              txn.xyz is a new way to use Ethereum. Everything required to
+              call functions is URL encoded!
+            </p>
+
           </Link>
         </div>
       </main>
