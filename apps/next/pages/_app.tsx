@@ -1,4 +1,5 @@
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import {parse, string} from 'valibot'
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 import GithubCorner from 'react-github-corner';
@@ -13,7 +14,6 @@ import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 // import { arbitrum, bsc, gnosis, optimism, polygon } from 'viem/chains';
-import { z } from 'zod';
 import { SEO } from '../src/frontend/components/SEO';
 import { gtag } from '../src/frontend/utils/analytics/gtag';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -56,9 +56,7 @@ import { WagmiProvider } from 'wagmi';
 //   testnet: false,
 // };
 
-const walletConnectProjectId = z
-  .string()
-  .parse(process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID);
+const walletConnectProjectId = parse(string(), process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID)
 
 // const { chains, publicClient } = configureChains(
 //   [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
