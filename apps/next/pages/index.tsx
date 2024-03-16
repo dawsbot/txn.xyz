@@ -19,7 +19,7 @@ const Home: NextPage = () => {
           <Link href="/v0/encode" className={styles.card}>
             <h2>
               <Image
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/lg/57/pocket-calculator_1f5a9.png"
+                src="/images/calculator.png"
                 width={24}
                 height={24}
                 alt={'calculator'}
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
           >
             <h2>
               <Image
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/helicopter_1f681.png"
+                src="/images/helicopter.png"
                 width={24}
                 height={24}
                 alt={'helicopter'}
@@ -60,7 +60,7 @@ const Home: NextPage = () => {
           >
             <h2>
               <Image
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/check-mark-button_2705.png"
+                src="/images/check-mark.png"
                 width={24}
                 height={24}
                 alt={'check mark'}
@@ -77,7 +77,7 @@ const Home: NextPage = () => {
           >
             <h2>
               <Image
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/money-with-wings_1f4b8.png"
+                src="/images/money-with-wings.png"
                 width={24}
                 height={24}
                 alt={'money with wings'}
@@ -93,10 +93,10 @@ const Home: NextPage = () => {
           <div className={styles.card}>
             <h2>
               <Image
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/nerd-face_1f913.png"
+                src="/images/nerd-face.png"
                 width={24}
                 height={24}
-                alt={'helicopter'}
+                alt={'nerd face'}
               />{' '}
               Command Line Tools&rarr;
             </h2>
@@ -109,10 +109,10 @@ const Home: NextPage = () => {
           <div className={styles.card}>
             <h2>
               <Image
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/spider-web_1f578-fe0f.png"
+                src="/images/spider-web.png"
                 width={24}
                 height={24}
-                alt={'check mark'}
+                alt={'spider web'}
               />{' '}
               Web Apps&rarr;
             </h2>
@@ -124,10 +124,10 @@ const Home: NextPage = () => {
           <div className={styles.card}>
             <h2>
               <Image
-                src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/apple/325/recycling-symbol_267b-fe0f.png"
+                src="/images//recycling.png"
                 width={24}
                 height={24}
-                alt={'check mark'}
+                alt={'recycling'}
               />{' '}
               Recurring Events&rarr;
             </h2>
