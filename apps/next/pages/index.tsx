@@ -124,7 +124,7 @@ const Home: NextPage = () => {
           <div className={styles.card}>
             <h2>
               <Image
-                src="/images//recycling.png"
+                src="/images/recycling.png"
                 width={24}
                 height={24}
                 alt={'recycling'}
