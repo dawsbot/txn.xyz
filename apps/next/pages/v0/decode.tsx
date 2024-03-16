@@ -1,5 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { NextPage } from 'next';
+import {parse, string} from 'valibot'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -15,7 +16,6 @@ import {
 import { EncodeURIComponent } from '../../../../packages/txn-dot-xyz/utils/url-encoding/url-encoding';
 import { Button } from '../../src/frontend/components/Button';
 import styles from '../../styles/Home.module.css';
-import { z } from 'zod';
 
 // http://localhost:3000/?fn=sendTransaction&to=seein.eth&value=1
 // http://localhost:3000/?fn=claim&contractAddress=0xcBE6B83e77cdc011Cc18F6f0Df8444E5783ed982
@@ -45,8 +45,8 @@ const Decode: NextPage = () => {
       return;
     }
     const _contractAddress = router.query.contractAddress as `0x${string}`;
-    const _fn = z.string().parse(router.query.fn);
-    const chainID = z.string().parse(router.query.chainID);
+    const _fn = parse(string(), router.query.fn);
+    const chainID = parse(string(), router.query.chainID);
     setFn(_fn);
     setContractAddress(_contractAddress);
     // fetch ABI from etherscan
@@ -91,7 +91,7 @@ const Decode: NextPage = () => {
   // send the native token of the chain
   if (fn === 'sendTransaction') {
     const to = router.query.to as `0x${string}`;
-    const value = z.string().parse(router.query.value);
+    const value = parse(string(),router.query.value);
     if (!to) {
       return <>Missing &quot;to&quot;</>;
     }
