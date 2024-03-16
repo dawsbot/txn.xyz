@@ -5,7 +5,7 @@ import GithubCorner from 'react-github-corner';
 import { ToastContainer } from 'react-toastify';
 // import { configureChains, createConfig, http, mainnet, WagmiConfig, WagmiProvider } from 'wagmi';
 // import { publicProvider } from 'wagmi/providers/public';
-import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import '../styles/globals.css';
 import styles from '../styles/Home.module.css';
 
@@ -85,7 +85,7 @@ const config = getDefaultConfig({
     [mainnet.id]: http(),
   },
 });
- const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 // const queryClient = new QueryClient();
 
@@ -167,25 +167,25 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider coolMode>
-          <GithubCorner
-            href="https://github.com/dawsbot/txn.xyz"
-            size={'15vw'}
-            bannerColor="#FFDE59"
-          />
-          <Component {...pageProps} />
+          <RainbowKitProvider coolMode>
+            <GithubCorner
+              href="https://github.com/dawsbot/txn.xyz"
+              size={'15vw'}
+              bannerColor="#FFDE59"
+            />
+            <Component {...pageProps} />
 
-          <footer className={styles.footer}>
-            <a
-              href="https://twitter.com/dawsonbotsford"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Made with ❤️ by daws
-            </a>
-          </footer>
-          <ToastContainer />
-        </RainbowKitProvider>
+            <footer className={styles.footer}>
+              <a
+                href="https://twitter.com/dawsonbotsford"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Made with ❤️ by daws
+              </a>
+            </footer>
+            <ToastContainer />
+          </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </>
