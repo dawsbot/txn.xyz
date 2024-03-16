@@ -1,4 +1,4 @@
-import { ContractInterface } from 'ethers';
+import type { Abi } from "viem";
 
 type Params = {
   contractAddress: string;
@@ -31,7 +31,7 @@ const chainData: Record<number, { apiRoot: string; apiKey: string }> = {
 export const fetchContractABI = async ({
   contractAddress,
   chainID,
-}: Params): Promise<ContractInterface> => {
+}: Params): Promise<Abi> => {
   const selectedChainData = chainData[chainID];
   const { apiRoot, apiKey } = selectedChainData;
   const abi = fetch(
@@ -39,7 +39,7 @@ export const fetchContractABI = async ({
   )
     .then((res) => res.json())
     .then((data: EtherscanResponse) => {
-      return JSON.parse(data.result) as ContractInterface;
+      return JSON.parse(data.result) as Abi;
     });
   return abi;
 };
