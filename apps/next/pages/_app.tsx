@@ -1,20 +1,25 @@
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 import GithubCorner from 'react-github-corner';
 import { ToastContainer } from 'react-toastify';
-import { configureChains, createConfig, mainnet, WagmiConfig } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
+// import { configureChains, createConfig, http, mainnet, WagmiConfig, WagmiProvider } from 'wagmi';
+// import { publicProvider } from 'wagmi/providers/public';
+import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import '../styles/globals.css';
 import styles from '../styles/Home.module.css';
 
 import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
-import { arbitrum, bsc, gnosis, optimism, polygon } from 'viem/chains';
+// import { arbitrum, bsc, gnosis, optimism, polygon } from 'viem/chains';
 import { z } from 'zod';
 import { SEO } from '../src/frontend/components/SEO';
 import { gtag } from '../src/frontend/utils/analytics/gtag';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { http } from 'viem';
+import { mainnet } from 'viem/chains';
+import { WagmiProvider } from 'wagmi';
 
 // const bscChain: Chain = {
 //   id: 56,
@@ -55,34 +60,32 @@ const walletConnectProjectId = z
   .string()
   .parse(process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID);
 
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
-  [publicProvider()],
-);
+// const { chains, publicClient } = configureChains(
+//   [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
+//   [publicProvider()],
+// );
 
-const { connectors } = getDefaultWallets({
-  appName: 'txn.xyz',
-  projectId: walletConnectProjectId,
-  chains,
-});
-
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-});
-
-// const walletConnectProjectId = z
-//   .string()
-//   .parse(process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID);
-// const config = getDefaultConfig({
+// const { connectors } = getDefaultWallets({
 //   appName: 'txn.xyz',
 //   projectId: walletConnectProjectId,
-//   chains: [mainnet],
-//   transports: {
-//     [mainnet.id]: http(),
-//   },
+//   chains,
 // });
+
+// const wagmiConfig = createConfig({
+//   autoConnect: true,
+//   connectors,
+//   publicClient,
+// });
+
+const config = getDefaultConfig({
+  appName: 'txn.xyz',
+  projectId: walletConnectProjectId,
+  chains: [mainnet],
+  transports: {
+    [mainnet.id]: http(),
+  },
+});
+ const queryClient = new QueryClient();
 
 // const queryClient = new QueryClient();
 
@@ -162,8 +165,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <TopNav>Subscribe</TopNav>
       </a>
 
-      <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider coolMode chains={chains}>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider coolMode>
           <GithubCorner
             href="https://github.com/dawsbot/txn.xyz"
             size={'15vw'}
@@ -182,7 +186,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           </footer>
           <ToastContainer />
         </RainbowKitProvider>
-      </WagmiConfig>
+        </QueryClientProvider>
+      </WagmiProvider>
     </>
   );
 }
