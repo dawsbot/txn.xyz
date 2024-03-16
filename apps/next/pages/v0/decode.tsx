@@ -6,11 +6,15 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { Abi } from 'viem';
-import { useWriteContract, useAccount, useWalletClient } from 'wagmi';
+import {
+  useWriteContract,
+  useAccount,
+  useWalletClient,
+  useSendTransaction,
+} from 'wagmi';
 import { EncodeURIComponent } from '../../../../packages/txn-dot-xyz/utils/url-encoding/url-encoding';
 import { Button } from '../../src/frontend/components/Button';
 import styles from '../../styles/Home.module.css';
-import { switchChain } from 'viem/actions';
 import { z } from 'zod';
 
 // http://localhost:3000/?fn=sendTransaction&to=seein.eth&value=1
@@ -30,9 +34,11 @@ const Decode: NextPage = () => {
   const [fn, setFn] = useState<string>();
   const [contractABI, setContractABI] = useState<Abi>();
   const { data: walletClient } = useWalletClient();
+  const { sendTransaction } = useSendTransaction();
   const { chain } = useAccount();
 
-  const { data: hash, writeContract } = useWriteContract()
+  const { data: hash, writeContract } = useWriteContract();
+  let executeTxn: (() => unknown) | null = null;
 
   useEffect(() => {
     if (!router.isReady) {
@@ -68,11 +74,6 @@ const Decode: NextPage = () => {
       </Body>
     );
   }
-  useEffect(() => {
-    if (!router.isReady) {
-      return;
-    }
-  }, [router.isReady])
   if (chain?.id != router.query.chainID) {
     const chainId = Number(router.query.chainID);
     walletClient.switchChain({ id: chainId });
@@ -105,7 +106,7 @@ const Decode: NextPage = () => {
         to,
         value: BigInt(value),
       };
-      walletClient?.sendTransaction(transaction);
+      executeTxn = () => walletClient?.sendTransaction(transaction);
     })();
   } else {
     if (typeof contractAddress !== 'string') {
@@ -115,25 +116,18 @@ const Decode: NextPage = () => {
     if (typeof contractABI === 'undefined') {
       return <>Fetching contract ABI...</>;
     }
-    if (!walletClient) {
-      return (
-        <>
-          wallet not found
-          <ConnectButton />
-        </>
-      );
-    }
 
     const functionParams = EncodeURIComponent.decode(
       router.query.fnParams as string,
     );
 
-    writeContract({
+    executeTxn = () =>
+      writeContract({
         address: contractAddress,
         abi: contractABI,
         functionName: fn,
-      args: [...(functionParams || [])],
-    });
+        args: [...(functionParams || [])],
+      });
   }
 
   return (
@@ -149,11 +143,11 @@ const Decode: NextPage = () => {
           <code>`{fn}`</code> on <code>`{contractAddress}`</code>
         </p>
         <Button
-          // @ts-ignore
-          onClick={() => window.location.reload(false)}
+          onClick={executeTxn ? executeTxn : () => {}}
           style={{ fontSize: '20px' }}
+          disabled={executeTxn === null}
         >
-          Execute Transaction
+          {executeTxn === null ? 'Loading' : 'Execute Transaction'}
         </Button>
 
         <div className={styles.grid} style={{ marginTop: '100px' }}>
