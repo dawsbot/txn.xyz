@@ -14,8 +14,9 @@ export class EncodeURIComponent {
   }
   public static decode(str: string): Array<unknown> {
     const vals = Object.values(qs.parse(str, qsOptions));
-    return vals.map((val) => {
+    const decoded = vals.map((val) => {
       return parseValue(val);
     });
+    return decoded;
   }
 }
