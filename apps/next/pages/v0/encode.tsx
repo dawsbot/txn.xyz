@@ -11,6 +11,7 @@ import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { EncodeURIComponent } from '../../../../packages/txn-dot-xyz/utils/url-encoding/url-encoding';
 import { Input } from '../../src/frontend/components/Input';
+
 import styles from '../../styles/Home.module.css';
 
 type ABILeaf = {
@@ -104,7 +105,9 @@ const ContractInputs: React.FunctionComponent<{
 
   const abiLeaf = contractABI.find((leaf) => leaf.name === fn);
   if (!abiLeaf) {
-    return <p style={{color: 'red'}}>Function "{fn}" not found on contract</p>;
+    return (
+      <p style={{ color: 'red' }}>Function "{fn}" not found on contract</p>
+    );
   }
   return (abiLeaf.inputs || []).map((input: any) => {
     const { name, type } = input;
