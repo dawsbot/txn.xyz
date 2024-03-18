@@ -43,7 +43,7 @@ const Decode: NextPage = () => {
   const [fn, setFn] = useState<string>();
   const [contractABI, setContractABI] = useState<Abi>();
   const { data: walletClient } = useWalletClient();
-  const { chain } = useAccount();
+  const { chainId } = useAccount();
 
   const {writeContract } = useWriteContract();
   let executeTxn: (() => unknown) | null = null;
@@ -75,11 +75,11 @@ const Decode: NextPage = () => {
     if (!router.isReady || !walletClient) {
       return
     }
-    if (chain?.id != routerQuery.chainID) {
-      const chainId = Number(routerQuery.chainID);
-      walletClient.switchChain({ id: chainId });
+    if (chainId != routerQuery.chainID) {
+      const newChainId = Number(routerQuery.chainID);
+      walletClient.switchChain({ id: newChainId });
     }
-  }, [chain?.id, routerQuery.chainID, router.isReady, walletClient?.name])
+  }, [chainId, routerQuery.chainID, router.isReady, walletClient?.name])
 
   if (!router.isReady) {
     return <Body>loading...</Body>;
@@ -92,10 +92,10 @@ const Decode: NextPage = () => {
       </Body>
     );
   }
-  if (chain?.id != routerQuery.chainID) {
+  if (chainId != routerQuery.chainID) {
     return (
       <Body>
-        <p>Must change network to {routerQuery.chainID}. You're connected with {chain?.id || 'unknown'} </p>
+        <p>Must change network to {routerQuery.chainID}. You're connected with {chainId || 'unknown'} </p>
         <ConnectButton />
       </Body>
     );

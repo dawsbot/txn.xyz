@@ -104,7 +104,7 @@ const ContractInputs: React.FunctionComponent<{
 
   const abiLeaf = contractABI.find((leaf) => leaf.name === fn);
   if (!abiLeaf) {
-    return <>Function not found on contract</>;
+    return <p style={{color: 'red'}}>Function "{fn}" not found on contract</p>;
   }
   return (abiLeaf.inputs || []).map((input: any) => {
     const { name, type } = input;

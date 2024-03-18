@@ -15,7 +15,7 @@ import { SEO } from '../src/frontend/components/SEO';
 import { gtag } from '../src/frontend/utils/analytics/gtag';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { http } from 'viem';
-import { mainnet } from 'viem/chains';
+import { arbitrum, bsc, gnosis, mainnet, optimism, polygon } from 'viem/chains';
 import { WagmiProvider } from 'wagmi';
 
 const walletConnectProjectId = parse(string(), process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID)
@@ -23,7 +23,7 @@ const walletConnectProjectId = parse(string(), process.env.NEXT_PUBLIC_WALLET_CO
 const config = getDefaultConfig({
   appName: 'txn.xyz',
   projectId: walletConnectProjectId,
-  chains: [mainnet],
+  chains: [mainnet, polygon, arbitrum, optimism, bsc, gnosis],
   transports: {
     [mainnet.id]: http(),
   },
