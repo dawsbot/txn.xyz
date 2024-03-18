@@ -1,17 +1,13 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { NextPage } from 'next';
-import {parse, string} from 'valibot'
+import { parse, string } from 'valibot';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { Abi } from 'viem';
-import {
-  useWriteContract,
-  useAccount,
-  useWalletClient,
-} from 'wagmi';
+import { useWriteContract, useAccount, useWalletClient } from 'wagmi';
 import { EncodeURIComponent } from '../../../../packages/txn-dot-xyz/utils/url-encoding/url-encoding';
 import { Button } from '../../src/frontend/components/Button';
 import styles from '../../styles/Home.module.css';
@@ -29,23 +25,23 @@ const Body = styled.div`
 `;
 
 interface RouterQuery {
-  contractAddress: string | undefined
-  chainID: string | undefined
-  fn: string | undefined
-  fnParams: string | undefined
-  to: string | undefined
-  value: string | undefined
+  contractAddress: string | undefined;
+  chainID: string | undefined;
+  fn: string | undefined;
+  fnParams: string | undefined;
+  to: string | undefined;
+  value: string | undefined;
 }
 const Decode: NextPage = () => {
   const router = useRouter();
-  const routerQuery= router.query as unknown as RouterQuery;
+  const routerQuery = router.query as unknown as RouterQuery;
   const [contractAddress, setContractAddress] = useState<`0x${string}`>();
   const [fn, setFn] = useState<string>();
   const [contractABI, setContractABI] = useState<Abi>();
   const { data: walletClient } = useWalletClient();
   const { chainId } = useAccount();
 
-  const {writeContract } = useWriteContract();
+  const { writeContract } = useWriteContract();
   let executeTxn: (() => unknown) | null = null;
 
   useEffect(() => {
@@ -73,13 +69,13 @@ const Decode: NextPage = () => {
   // this should only run once
   useEffect(() => {
     if (!router.isReady || !walletClient) {
-      return
+      return;
     }
     if (chainId != routerQuery.chainID) {
       const newChainId = Number(routerQuery.chainID);
       walletClient.switchChain({ id: newChainId });
     }
-  }, [chainId, routerQuery.chainID, router.isReady, walletClient?.name])
+  }, [chainId, routerQuery.chainID, router.isReady, walletClient?.name]);
 
   if (!router.isReady) {
     return <Body>loading...</Body>;
@@ -95,7 +91,10 @@ const Decode: NextPage = () => {
   if (chainId != routerQuery.chainID) {
     return (
       <Body>
-        <p>Must change network to {routerQuery.chainID}. You're connected with {chainId || 'unknown'} </p>
+        <p>
+          Must change network to {routerQuery.chainID}. You're connected with{' '}
+          {chainId || 'unknown'}{' '}
+        </p>
         <ConnectButton />
       </Body>
     );
@@ -107,7 +106,7 @@ const Decode: NextPage = () => {
   // send the native token of the chain
   if (fn === 'sendTransaction') {
     const to = routerQuery.to as `0x${string}`;
-    const value = parse(string(),routerQuery.value);
+    const value = parse(string(), routerQuery.value);
     if (!to) {
       return <>Missing &quot;to&quot;</>;
     }

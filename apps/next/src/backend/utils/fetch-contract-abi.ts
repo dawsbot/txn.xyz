@@ -1,4 +1,5 @@
-import type { Abi } from "viem";
+import type { Abi } from 'viem';
+import { parse, string } from 'valibot';
 
 type Params = {
   contractAddress: string;
@@ -6,25 +7,28 @@ type Params = {
 };
 const chainData: Record<number, { apiRoot: string; apiKey: string }> = {
   1: {
-    apiRoot: 'https://api.etherscan.io/api', // Ethereum mainnet
-    // TODO: Replace this with definitive env checking
-    apiKey: process.env.ETHERSCAN_API_KEY as string,
+    apiRoot: 'https://api.etherscan.io/api',
+    apiKey: parse(string(), process.env.ETHERSCAN_API_KEY),
   },
   10: {
     apiRoot: 'https://api-optimistic.etherscan.io/api',
-    apiKey: process.env.OPTIMISTIC_ETHERSCAN_API_KEY as string,
+    apiKey: parse(string(), process.env.OPTIMISTIC_ETHERSCAN_API_KEY),
   },
   56: {
     apiRoot: 'https://api.bscscan.com/api',
-    apiKey: process.env.BSCSCAN_API_KEY as string,
+    apiKey: parse(string(), process.env.BSCSCAN_API_KEY),
   },
   100: {
     apiRoot: 'https://api.gnosisscan.io/api',
-    apiKey: process.env.GNOSISSCAN_API_KEY as string,
+    apiKey: parse(string(), process.env.GNOSISSCAN_API_KEY),
   },
   137: {
-    apiRoot: 'https://api.polygonscan.com/api', // Polygon
-    apiKey: process.env.POLYGONSCAN_API_KEY as string,
+    apiRoot: 'https://api.polygonscan.com/api',
+    apiKey: parse(string(), process.env.POLYGONSCAN_API_KEY),
+  },
+  42161: {
+    apiRoot: 'https://api.arbiscan.io/api',
+    apiKey: parse(string(), process.env.ARBISCAN_API_KEY),
   },
 };
 
@@ -39,6 +43,7 @@ export const fetchContractABI = async ({
   )
     .then((res) => res.json())
     .then((data: EtherscanResponse) => {
+      // TODO: Make this a valibot validation instead of a type cast
       return JSON.parse(data.result) as Abi;
     });
   return abi;

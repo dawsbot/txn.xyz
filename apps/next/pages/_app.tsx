@@ -1,5 +1,5 @@
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import {parse, string} from 'valibot'
+import { parse, string } from 'valibot';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 import GithubCorner from 'react-github-corner';
@@ -18,7 +18,10 @@ import { http } from 'viem';
 import { arbitrum, bsc, gnosis, mainnet, optimism, polygon } from 'viem/chains';
 import { WagmiProvider } from 'wagmi';
 
-const walletConnectProjectId = parse(string(), process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID)
+const walletConnectProjectId = parse(
+  string(),
+  process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+);
 
 const config = getDefaultConfig({
   appName: 'txn.xyz',
