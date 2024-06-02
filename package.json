@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "prepare": "husky install",
-    "test": "cd packages/txn-dot-xyz && npm run test"
+    "test": "cd packages/txn-dot-xyz && npm run test",
+    "postinstall": "cd packages/txn-dot-xyz && npm install"
   },
   "prettier": {
     "plugins": [
