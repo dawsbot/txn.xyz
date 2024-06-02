@@ -5,7 +5,7 @@
   "scripts": {
     "prepare": "husky install",
     "test": "cd packages/txn-dot-xyz && npm run test",
-    "postinstall": "cd packages/txn-dot-xyz && npm install"
+    "postinstall": "cd packages/txn-dot-xyz && npm install && cd ../../apps/next && npm install"
   },
   "prettier": {
     "plugins": [
