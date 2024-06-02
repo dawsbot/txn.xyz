@@ -6,12 +6,17 @@
     "prepare": "husky install",
     "test": "cd packages/txn-dot-xyz && npm run test"
   },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ]
+  },
   "devDependencies": {
-    "eslint": "^8.15.0",
+    "eslint": "^8.57.0",
     "eslint-config-next": "^12.1.6",
     "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^3.2.5",
+    "lint-staged": "^15.2.5",
+    "prettier": "^3.3.0",
     "prettier-plugin-organize-imports": "^3.2.4",
     "typescript": "^5.4.2"
   },
