@@ -29,6 +29,7 @@ interface RouterQuery {
   chainID: string | undefined;
   fn: string | undefined;
   fnParams: string | undefined;
+  abi: string | undefined;
   to: string | undefined;
   value: string | undefined;
 }
@@ -37,9 +38,14 @@ const Decode: NextPage = () => {
   const routerQuery = router.query as unknown as RouterQuery;
   const [contractAddress, setContractAddress] = useState<`0x${string}`>();
   const [fn, setFn] = useState<string>();
+  const [fnParamsStr, setFnParamsStr] = useState<string>();
   const [contractABI, setContractABI] = useState<Abi>();
   const { data: walletClient } = useWalletClient();
   const { chainId } = useAccount();
+
+  const functionParams = EncodeURIComponent.decode(
+    routerQuery.fnParams as string,
+  );
 
   const { writeContract } = useWriteContract();
   let executeTxn: (() => unknown) | null = null;
@@ -53,18 +59,27 @@ const Decode: NextPage = () => {
     const chainID = parse(string(), routerQuery.chainID);
     setFn(_fn);
     setContractAddress(_contractAddress);
-    // fetch ABI from etherscan
-    fetch(
-      `/api/v0/fetch-abi?contractAddress=${_contractAddress}&chainID=${chainID}`,
-    )
-      .then((res) => res.json())
-      .then((data) => data.abi)
-      .then((abi) => setContractABI(abi))
-      .catch((err) => {
-        toast.warn(
-          `There was an error fetching the ABI. Maybe this contract lives on a different network from network ID ${chainID}?`,
-        );
-      });
+
+    setFnParamsStr(functionParams.toString());
+    // fetch ABI from etherscan if its not provided
+    // One the leaf of the ABI for the fn needs be provided
+    // It should be abi=encodeURIComponent(JSON.stringify(abi))
+    if (routerQuery.abi) {
+      setContractABI(JSON.parse(routerQuery.abi.toString()));
+    } else {
+      fetch(
+        `/api/v0/fetch-abi?contractAddress=${_contractAddress}&chainID=${chainID}`,
+      )
+        .then((res) => res.json())
+        .then((data) => data.abi)
+        .then((abi) => setContractABI(abi))
+        .catch((err) => {
+          toast.warn(
+            `There was an error fetching the ABI. Maybe this contract lives on a different network from network ID ${chainID}?`,
+          );
+          console.error(err);
+        });
+    }
   }, [routerQuery?.fn, router.isReady]);
   // this should only run once
   useEffect(() => {
@@ -131,10 +146,6 @@ const Decode: NextPage = () => {
     if (typeof contractABI === 'undefined') {
       return <>Fetching contract ABI...</>;
     }
-
-    const functionParams = EncodeURIComponent.decode(
-      routerQuery.fnParams as string,
-    );
 
     executeTxn = () =>
       writeContract({
