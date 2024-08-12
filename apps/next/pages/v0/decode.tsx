@@ -166,9 +166,7 @@ const Decode: NextPage = () => {
         <p className={styles.description}>
           The person who sent you here wants you to call
           <br />
-          <code>`{fn}`</code> on <code>`{contractAddress}`</code> with params
-          <br />
-          <code>`{fnParamsStr}`</code>
+          <code>`{fn}`</code> on <code>`{contractAddress}`</code>
         </p>
         <Button
           onClick={executeTxn ? executeTxn : () => {}}
