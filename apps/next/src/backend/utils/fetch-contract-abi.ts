@@ -30,6 +30,10 @@ const chainData: Record<number, { apiRoot: string; apiKey: string }> = {
     apiRoot: 'https://api.arbiscan.io/api',
     apiKey: parse(string(), process.env.ARBISCAN_API_KEY),
   },
+  8453: {
+    apiRoot: 'https://api.basescan.org/api',
+    apiKey: parse(string(), process.env.BASESCAN_API_KEY),
+  },
 };
 
 export const fetchContractABI = async ({

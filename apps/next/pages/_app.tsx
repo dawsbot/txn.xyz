@@ -15,7 +15,15 @@ import { SEO } from '../src/frontend/components/SEO';
 import { gtag } from '../src/frontend/utils/analytics/gtag';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { http } from 'viem';
-import { arbitrum, bsc, gnosis, mainnet, optimism, polygon } from 'viem/chains';
+import {
+  arbitrum,
+  base,
+  bsc,
+  gnosis,
+  mainnet,
+  optimism,
+  polygon,
+} from 'viem/chains';
 import { WagmiProvider } from 'wagmi';
 
 const walletConnectProjectId = parse(
@@ -26,7 +34,7 @@ const walletConnectProjectId = parse(
 const config = getDefaultConfig({
   appName: 'txn.xyz',
   projectId: walletConnectProjectId,
-  chains: [mainnet, polygon, arbitrum, optimism, bsc, gnosis],
+  chains: [mainnet, base, polygon, arbitrum, optimism, bsc, gnosis],
   transports: {
     [mainnet.id]: http(),
   },
