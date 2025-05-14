@@ -92,6 +92,7 @@ const chainOptions = [
   { value: 42161, label: 'Arbitrum One' },
   { value: 100, label: 'Gnosis Chain' },
   { value: 56, label: 'Binance Smart Chain' },
+  { value: 8453, label: 'Base' },
 ];
 
 // @ts-ignore
