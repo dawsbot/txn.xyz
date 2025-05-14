@@ -26,10 +26,12 @@
 
 ## Roadmap
 
+- [x] Support Arbitrum
+- [x] Support Base Chain
 - [ ] npm module (drop-in replacement for ethers.js)
 - [ ] txn statuses
 - [ ] More examples
-- [ ] Support Arbitrum
+- [ ] Support Uni Chain
 
 ## Built With
 
@@ -38,6 +40,10 @@ Optimism, Polygon, Next.js, etc.
 ## Integrations
 
 To integrate with the the Hardhat environment, try the [Hardhat plugin by SolidState](https://github.com/solidstate-network/hardhat-txn-dot-xyz).
+
+## Development
+
+If you want to edit or change anything in the web app, you would be in the `apps/next` folder. There is a separate `package.json` there.
 
 ## EthBogota
 

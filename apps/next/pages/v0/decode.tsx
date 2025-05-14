@@ -1,6 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { NextPage } from 'next';
-import { parse, string } from 'valibot';
+import * as z from '@zod/mini';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -55,8 +55,8 @@ const Decode: NextPage = () => {
       return;
     }
     const _contractAddress = routerQuery.contractAddress as `0x${string}`;
-    const _fn = parse(string(), routerQuery.fn);
-    const chainID = parse(string(), routerQuery.chainID);
+    const _fn = z.string().parse(routerQuery.fn);
+    const chainID = z.string().parse(routerQuery.chainID);
     setFn(_fn);
     setContractAddress(_contractAddress);
 
@@ -121,7 +121,7 @@ const Decode: NextPage = () => {
   // send the native token of the chain
   if (fn === 'sendTransaction') {
     const to = routerQuery.to as `0x${string}`;
-    const value = parse(string(), routerQuery.value);
+    const value = z.string().parse(routerQuery.value);
     if (!to) {
       return <>Missing &quot;to&quot;</>;
     }
