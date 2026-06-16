@@ -11,6 +11,7 @@ import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { EncodeURIComponent } from '../../../../packages/txn-dot-xyz/utils/url-encoding/url-encoding';
 import { Input } from '../../src/frontend/components/Input';
+import { chainOptions } from '../../src/chains';
 
 import styles from '../../styles/Home.module.css';
 
@@ -84,16 +85,8 @@ function encodeParams(
   return `${pathPrefix}?${query}`;
 }
 
-const ethereumOption = { value: 1, label: 'Ethereum' };
-const chainOptions = [
-  ethereumOption,
-  { value: 137, label: 'Polygon' },
-  { value: 10, label: 'Optimism' },
-  { value: 42161, label: 'Arbitrum One' },
-  { value: 100, label: 'Gnosis Chain' },
-  { value: 56, label: 'Binance Smart Chain' },
-  { value: 8453, label: 'Base' },
-];
+// Ethereum is the first supported chain and the default selection.
+const ethereumOption = chainOptions[0];
 
 // @ts-ignore
 const ContractInputs: React.FunctionComponent<{
