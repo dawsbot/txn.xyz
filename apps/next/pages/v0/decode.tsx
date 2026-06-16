@@ -107,8 +107,8 @@ const Decode: NextPage = () => {
     return (
       <Body>
         <p>
-          Must change network to {routerQuery.chainID}. You're connected with{' '}
-          {chainId || 'unknown'}{' '}
+          Must change network to {routerQuery.chainID}. You&apos;re connected
+          with {chainId || 'unknown'}{' '}
         </p>
         <ConnectButton />
       </Body>

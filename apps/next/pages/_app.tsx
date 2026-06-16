@@ -12,7 +12,7 @@ import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import { SEO } from '../src/frontend/components/SEO';
-import { gtag } from '../src/frontend/utils/analytics/gtag';
+import { useGtag } from '../src/frontend/utils/analytics/gtag';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { http } from 'viem';
 import {
@@ -36,6 +36,12 @@ const config = getDefaultConfig({
   chains: [mainnet, base, polygon, arbitrum, optimism, bsc, gnosis],
   transports: {
     [mainnet.id]: http(),
+    [base.id]: http(),
+    [polygon.id]: http(),
+    [arbitrum.id]: http(),
+    [optimism.id]: http(),
+    [bsc.id]: http(),
+    [gnosis.id]: http(),
   },
 });
 const queryClient = new QueryClient();
@@ -51,7 +57,7 @@ const TopNav = styled.header`
   font-size: 22px;
 `;
 function MyApp({ Component, pageProps }: AppProps) {
-  gtag.useGtag();
+  useGtag();
   return (
     <>
       <SEO />
