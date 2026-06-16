@@ -15,22 +15,6 @@ class GTag {
 
   public setUser = (uuid: string | void) => this.config({ user_id: uuid });
 
-  public useGtag = () => {
-    const router = useRouter();
-    useEffect(() => {
-      const handleRouteChange = (url: string) => {
-        if (process.env.NODE_ENV !== 'production') {
-          return;
-        }
-        this.logPageView(url);
-      };
-      router.events.on('routeChangeComplete', handleRouteChange);
-      return () => {
-        router.events.off('routeChangeComplete', handleRouteChange);
-      };
-    }, [router.events]);
-  };
-
   private readonly config = (settings: ConfigSettings) => {
     (window as any).gtag('config', NEXT_PUBLIC_G_TAG_ID, settings);
   };
@@ -43,3 +27,21 @@ type ConfigSettings =
   | { user_id: string | void };
 
 export const gtag = new GTag();
+
+// Standalone custom hook (hooks can't live on a class) that tracks page views
+// on route changes.
+export const useGtag = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      if (process.env.NODE_ENV !== 'production') {
+        return;
+      }
+      gtag.logPageView(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+};
