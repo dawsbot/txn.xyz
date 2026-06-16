@@ -12,7 +12,7 @@ import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import { SEO } from '../src/frontend/components/SEO';
-import { gtag } from '../src/frontend/utils/analytics/gtag';
+import { useGtag } from '../src/frontend/utils/analytics/gtag';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { http } from 'viem';
 import {
@@ -57,7 +57,7 @@ const TopNav = styled.header`
   font-size: 22px;
 `;
 function MyApp({ Component, pageProps }: AppProps) {
-  gtag.useGtag();
+  useGtag();
   return (
     <>
       <SEO />
