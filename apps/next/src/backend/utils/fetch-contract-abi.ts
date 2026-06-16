@@ -5,56 +5,39 @@ type Params = {
   contractAddress: string;
   chainID: number;
 };
-const chainData: Record<number, { apiRoot: string; apiKey: string }> = {
-  1: {
-    apiRoot: 'https://api.etherscan.io/api',
-    apiKey: z.string().parse(process.env.ETHERSCAN_API_KEY),
-  },
-  10: {
-    apiRoot: 'https://api-optimistic.etherscan.io/api',
-    apiKey: z.string().parse(process.env.OPTIMISTIC_ETHERSCAN_API_KEY),
-  },
-  56: {
-    apiRoot: 'https://api.bscscan.com/api',
-    apiKey: z.string().parse(process.env.BSCSCAN_API_KEY),
-  },
-  100: {
-    apiRoot: 'https://api.gnosisscan.io/api',
-    apiKey: z.string().parse(process.env.GNOSISSCAN_API_KEY),
-  },
-  137: {
-    apiRoot: 'https://api.polygonscan.com/api',
-    apiKey: z.string().parse(process.env.POLYGONSCAN_API_KEY),
-  },
-  42161: {
-    apiRoot: 'https://api.arbiscan.io/api',
-    apiKey: z.string().parse(process.env.ARBISCAN_API_KEY),
-  },
-  8453: {
-    apiRoot: 'https://api.basescan.org/api',
-    apiKey: z.string().parse(process.env.BASESCAN_API_KEY),
-  },
-};
+
+// Etherscan V2 is a single multichain endpoint: one API key works across all
+// supported chains, with the chain selected via the `chainid` query param.
+// The old per-chain V1 endpoints (api-optimistic.etherscan.io, etc.) are
+// deprecated and now return an error string instead of an ABI.
+// https://docs.etherscan.io/v2-migration
+const ETHERSCAN_API_ROOT = 'https://api.etherscan.io/v2/api';
+const apiKey = z.string().parse(process.env.ETHERSCAN_API_KEY);
+
+const supportedChainIDs = new Set([1, 10, 56, 100, 137, 42161, 8453]);
 
 export const fetchContractABI = async ({
   contractAddress,
   chainID,
 }: Params): Promise<Abi> => {
-  const selectedChainData = chainData[chainID];
-  const { apiRoot, apiKey } = selectedChainData;
-  const abi = fetch(
-    `${apiRoot}?module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`,
-  )
-    .then((res) => res.json())
-    .then((data: EtherscanResponse) => {
-      // TODO: Make this a zod validation instead of a type cast
-      return JSON.parse(data.result) as Abi;
-    });
-  return abi;
+  if (!supportedChainIDs.has(chainID)) {
+    throw new Error(`Unsupported chainID: ${chainID}`);
+  }
+  const res = await fetch(
+    `${ETHERSCAN_API_ROOT}?chainid=${chainID}&module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`,
+  );
+  const data: EtherscanResponse = await res.json();
+  if (data.status !== '1') {
+    throw new Error(
+      `Etherscan API error for ${contractAddress}: ${data.result}`,
+    );
+  }
+  // TODO: Make this a zod validation instead of a type cast
+  return JSON.parse(data.result) as Abi;
 };
 
 type EtherscanResponse = {
-  status: '1';
-  message: 'OK';
-  result: '[{"inputs":[{"internalType":"address","name":"token_","type":"address"},{"internalType":"bytes32","name":"merkleRoot_","type":"bytes32"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"index","type":"uint256"},{"indexed":false,"internalType":"address","name":"account","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Claimed","type":"event"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"},{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"bytes32[]","name":"merkleProof","type":"bytes32[]"}],"name":"claim","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"isClaimed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"merkleRoot","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]';
+  status: string;
+  message: string;
+  result: string;
 };
