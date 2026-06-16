@@ -20,11 +20,13 @@ export const fetchContractABI = async ({
   contractAddress,
   chainID,
 }: Params): Promise<Abi> => {
-  if (!supportedChainIDs.has(chainID)) {
+  // chainID arrives from the query string as a string, so coerce before lookup.
+  const numericChainID = Number(chainID);
+  if (!supportedChainIDs.has(numericChainID)) {
     throw new Error(`Unsupported chainID: ${chainID}`);
   }
   const res = await fetch(
-    `${ETHERSCAN_API_ROOT}?chainid=${chainID}&module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`,
+    `${ETHERSCAN_API_ROOT}?chainid=${numericChainID}&module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`,
   );
   const data: EtherscanResponse = await res.json();
   if (data.status !== '1') {
