@@ -36,6 +36,12 @@ const config = getDefaultConfig({
   chains: [mainnet, base, polygon, arbitrum, optimism, bsc, gnosis],
   transports: {
     [mainnet.id]: http(),
+    [base.id]: http(),
+    [polygon.id]: http(),
+    [arbitrum.id]: http(),
+    [optimism.id]: http(),
+    [bsc.id]: http(),
+    [gnosis.id]: http(),
   },
 });
 const queryClient = new QueryClient();
