@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "qs": "^6.12.1"
+    "qs": "^6.12.1",
+    "viem": "^2.52.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
