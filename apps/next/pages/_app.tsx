@@ -10,7 +10,6 @@ import styles from '../styles/Home.module.css';
 
 import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
-import styled from 'styled-components';
 import { SEO } from '../src/frontend/components/SEO';
 import { useGtag } from '../src/frontend/utils/analytics/gtag';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -32,16 +31,6 @@ const config = getDefaultConfig({
 });
 const queryClient = new QueryClient();
 
-const TopNav = styled.header`
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffde59;
-  color: rgb(72, 72, 72);
-  font-weight: bold
-  font-size: 22px;
-`;
 function MyApp({ Component, pageProps }: AppProps) {
   useGtag();
   return (
@@ -66,14 +55,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       `,
         }}
       />
-      <a
-        href="https://e95799bb.sibforms.com/serve/MUIEAFEU_lFBb8Ks-vTDFBBPIK6BGIhOKSWtTVyNwsITdZs4EmCMVfr08CT2sSnJf6rjE2LYXlisFNgaPrZG3ekl58RQ7kuks2aMYjMtUGLoA13omLnWl9q1aQiGn4eqbTs8L3bxPdTP_BQAEBohfmSYuTunj5cOhBvBt7wak1b_nxcguy5ZKrTD_NssmH3RODhTSKBScGgthPHX"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <TopNav>Subscribe</TopNav>
-      </a>
-
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider coolMode>
