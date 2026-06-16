@@ -14,17 +14,9 @@ import styled from 'styled-components';
 import { SEO } from '../src/frontend/components/SEO';
 import { useGtag } from '../src/frontend/utils/analytics/gtag';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { http } from 'viem';
-import {
-  arbitrum,
-  base,
-  bsc,
-  gnosis,
-  mainnet,
-  optimism,
-  polygon,
-} from 'viem/chains';
+import { http, type Transport } from 'viem';
 import { WagmiProvider } from 'wagmi';
+import { supportedViemChains } from '../src/chains';
 
 const walletConnectProjectId = z
   .string()
@@ -33,16 +25,10 @@ const walletConnectProjectId = z
 const config = getDefaultConfig({
   appName: 'txn.xyz',
   projectId: walletConnectProjectId,
-  chains: [mainnet, base, polygon, arbitrum, optimism, bsc, gnosis],
-  transports: {
-    [mainnet.id]: http(),
-    [base.id]: http(),
-    [polygon.id]: http(),
-    [arbitrum.id]: http(),
-    [optimism.id]: http(),
-    [bsc.id]: http(),
-    [gnosis.id]: http(),
-  },
+  chains: supportedViemChains,
+  transports: Object.fromEntries(
+    supportedViemChains.map((chain) => [chain.id, http()]),
+  ) as Record<number, Transport>,
 });
 const queryClient = new QueryClient();
 

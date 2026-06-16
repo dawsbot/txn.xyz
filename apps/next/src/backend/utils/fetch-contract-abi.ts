@@ -1,5 +1,6 @@
 import type { Abi } from 'viem';
 import * as z from '@zod/mini';
+import { supportedChainIDs } from '../../chains';
 
 type Params = {
   contractAddress: string;
@@ -13,8 +14,6 @@ type Params = {
 // https://docs.etherscan.io/v2-migration
 const ETHERSCAN_API_ROOT = 'https://api.etherscan.io/v2/api';
 const apiKey = z.string().parse(process.env.ETHERSCAN_API_KEY);
-
-const supportedChainIDs = new Set([1, 10, 56, 100, 137, 42161, 8453]);
 
 export const fetchContractABI = async ({
   contractAddress,
