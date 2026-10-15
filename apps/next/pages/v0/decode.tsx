@@ -3,11 +3,16 @@ import { NextPage } from 'next';
 import * as z from '@zod/mini';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { Abi } from 'viem';
-import { useWriteContract, useAccount, useWalletClient } from 'wagmi';
+import {
+  useAccount,
+  useSwitchChain,
+  useWalletClient,
+  useWriteContract,
+} from 'wagmi';
 import { EncodeURIComponent } from '../../../../packages/txn-dot-xyz/utils/url-encoding/url-encoding';
 import { Button } from '../../src/frontend/components/Button';
 import styles from '../../styles/Home.module.css';
@@ -81,16 +86,23 @@ const Decode: NextPage = () => {
         });
     }
   }, [routerQuery?.fn, router.isReady]);
-  // this should only run once
+  // Ask the wallet to switch networks once per page load. Re-prompting on
+  // every chainId change can ping-pong with wallets that switch back.
+  // wagmi's switchChain (unlike viem's walletClient.switchChain) also adds the
+  // chain when the wallet lacks it and confirms switches that skip the
+  // `chainChanged` event.
+  const { switchChain, isPending: isSwitchingChain } = useSwitchChain();
+  const requestedChainId = Number(routerQuery.chainID);
+  const hasRequestedSwitch = useRef(false);
   useEffect(() => {
-    if (!router.isReady || !walletClient) {
+    if (!router.isReady || !walletClient || hasRequestedSwitch.current) {
       return;
     }
-    if (chainId != routerQuery.chainID) {
-      const newChainId = Number(routerQuery.chainID);
-      walletClient.switchChain({ id: newChainId });
+    if (chainId !== requestedChainId) {
+      hasRequestedSwitch.current = true;
+      switchChain({ chainId: requestedChainId });
     }
-  }, [chainId, routerQuery.chainID, router.isReady, walletClient?.name]);
+  }, [chainId, requestedChainId, router.isReady, walletClient, switchChain]);
 
   if (!router.isReady) {
     return <Body>loading...</Body>;
@@ -103,13 +115,19 @@ const Decode: NextPage = () => {
       </Body>
     );
   }
-  if (chainId != routerQuery.chainID) {
+  if (chainId !== requestedChainId) {
     return (
       <Body>
         <p>
           Must change network to {routerQuery.chainID}. You&apos;re connected
           with {chainId || 'unknown'}{' '}
         </p>
+        <Button
+          onClick={() => switchChain({ chainId: requestedChainId })}
+          disabled={isSwitchingChain}
+        >
+          {isSwitchingChain ? 'Switching...' : `Switch to ${requestedChainId}`}
+        </Button>
         <ConnectButton />
       </Body>
     );
